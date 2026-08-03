@@ -1,0 +1,4 @@
+backups/*.tar
+backups/*.tar.gz
+backups/*.tgz
+!backups/.gitkeep
