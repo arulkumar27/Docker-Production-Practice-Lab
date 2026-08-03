@@ -1,0 +1,5 @@
+secrets/*
+!secrets/database-password.txt.example
+.env
+.env.*
+!.env.example
