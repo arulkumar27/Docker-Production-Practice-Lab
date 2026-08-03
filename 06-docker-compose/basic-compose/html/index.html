@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Compose Practice</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #020617;
+      --surface: #0f172a;
+      --primary: #38bdf8;
+      --success: #4ade80;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: var(--background);
+    }
+
+    main {
+      width: min(100%, 720px);
+      padding: 48px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      color: var(--primary);
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 18px;
+      color: #052e16;
+      background: var(--success);
+      border-radius: 999px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Docker Compose Practice</h1>
+    <p>
+      This Nginx container, bind mount, network, health check and restart
+      policy are managed through a Compose file.
+    </p>
+    <span class="status">Compose service is healthy</span>
+  </main>
+</body>
+</html>
