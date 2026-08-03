@@ -1,0 +1,58 @@
+name: read-only-security-practice
+
+services:
+  application:
+    image: python:3.13-alpine
+    container_name: read-only-application
+    working_dir: /app
+    command:
+      - python
+      - -m
+      - http.server
+      - "8080"
+      - --bind
+      - 0.0.0.0
+    ports:
+      - "8080:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    volumes:
+      - type: volume
+        source: application-content
+        target: /app
+        read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 100
+    restart: unless-stopped
+
+  content-initializer:
+    image: alpine:3.21
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cat > /content/index.html <<'EOF'
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <title>Read-Only Container</title>
+        </head>
+        <body>
+          <h1>Read-Only Container Filesystem</h1>
+          <p>The application content is mounted as read-only.</p>
+        </body>
+        </html>
+        EOF
+    volumes:
+      - type: volume
+        source: application-content
+        target: /content
+    restart: "no"
+
+volumes:
+  application-content:
