@@ -1,0 +1,30 @@
+name: docker-basic-compose
+
+services:
+  web:
+    image: nginx:1.27-alpine
+    container_name: basic-compose-web
+    ports:
+      - "8080:80"
+    volumes:
+      - type: bind
+        source: ./html
+        target: /usr/share/nginx/html
+        read_only: true
+    networks:
+      - frontend-network
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget --quiet --tries=1 --spider http://127.0.0.1:80/ || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  frontend-network:
+    driver: bridge
