@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker CI/CD Practice</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #020617;
+      --surface: #0f172a;
+      --border: #334155;
+      --primary: #38bdf8;
+      --success: #4ade80;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, #172554, transparent 45%),
+        var(--background);
+    }
+
+    main {
+      width: min(100%, 720px);
+      padding: 48px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+    }
+
+    h1 {
+      color: var(--primary);
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 10px 18px;
+      color: #052e16;
+      background: var(--success);
+      border-radius: 999px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Docker CI/CD Practice</h1>
+
+    <p>
+      This application image was automatically built, tested, scanned and
+      published through a CI/CD pipeline.
+    </p>
+
+    <span class="status">Pipeline deployment ready</span>
+  </main>
+</body>
+</html>
