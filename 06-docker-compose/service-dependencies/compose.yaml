@@ -1,0 +1,52 @@
+name: docker-service-dependencies
+
+services:
+  database:
+    image: postgres:17-alpine
+    container_name: dependencies-database
+    environment:
+      POSTGRES_DB: practice_database
+      POSTGRES_USER: practice_user
+      POSTGRES_PASSWORD: practice_password
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./init
+        target: /docker-entrypoint-initdb.d
+        read_only: true
+    networks:
+      - database-network
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U practice_user -d practice_database
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:5
+    container_name: dependencies-adminer
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: database
+    ports:
+      - "8080:8080"
+    networks:
+      - database-network
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+    name: dependencies-postgres-data
+
+networks:
+  database-network:
+    name: dependencies-database-network
+    driver: bridge
