@@ -1,0 +1,42 @@
+name: ${COMPOSE_PROJECT_NAME:-docker-environment-practice}
+
+services:
+  database:
+    image: postgres:${POSTGRES_IMAGE_TAG:-17-alpine}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB must be provided}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER must be provided}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be provided}
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}
+      interval: ${HEALTHCHECK_INTERVAL:-10s}
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:${ADMINER_IMAGE_TAG:-5}
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: database
+    ports:
+      - "${ADMINER_HOST_PORT:-8080}:8080"
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+volumes:
+  database-data:
+
+networks:
+  backend-network:
+    driver: bridge
