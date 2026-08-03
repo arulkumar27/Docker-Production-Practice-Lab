@@ -1,0 +1,30 @@
+name: docker-resource-limits
+
+services:
+  limited-service:
+    image: alpine:3.21
+    container_name: limited-service
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo "Resource-limited container started"
+        while true; do
+          sleep 3600
+        done
+    mem_limit: 256m
+    mem_reservation: 128m
+    cpus: 0.50
+    pids_limit: 100
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 2048
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m
+    restart: unless-stopped
