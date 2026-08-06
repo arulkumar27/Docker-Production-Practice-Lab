@@ -1,4 +1,4 @@
-# Docker Production Practice Lab
+# Docker concepts
 
 A structured hands-on repository created to learn, practise, and demonstrate Docker concepts from fundamentals to production-oriented container workflows.
 
@@ -22,7 +22,7 @@ This repository contains topic-based practice folders, reusable examples, troubl
 ## Repository Structure
 
 ```text
-Docker-Production-Practice-Lab/
+Docker-concepts/
 │
 ├── README.md
 ├── LICENSE
